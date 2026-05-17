@@ -19,7 +19,6 @@
 
         <nav class="nav-links">
             <a href="#" class="active">Home</a>
-            <a href="#">Available Dogs</a>
         </nav>
 
         <div class="nav-actions">
@@ -88,20 +87,79 @@
             </div>
         </section>
     </main>
+    <section class="available-preview">
+        <div class="preview-header">
+            <div>
+                <h2>Perros disponibles</h2>
+                <p>
+                    Conoce algunos de los perros que están esperando una familia amorosa.
+                </p>
+            </div>
 
-    <footer class="footer">
-        <div>
-            <h4>RefuPet</h4>
-            <p>© 2024 RefuPet. Spreading joy, one<br>adoption at a time.</p>
+            <a href="{{ route('dogs.index') }}" class="btn btn-outline">
+                Ver todos
+            </a>
         </div>
 
-        <div class="footer-links">
-            <a href="#">Contact Us</a>
-            <a href="#">Our Mission</a>
-            <a href="#">Success Stories</a>
-            <a href="#">Privacy Policy</a>
-        </div>
-    </footer>
+        @if ($dogs->isEmpty())
+            <div class="empty-dogs">
+                <h3>Todavía no hay perros disponibles</h3>
+                <p>Cuando el admin registre perros disponibles, aparecerán aquí.</p>
+            </div>
+        @else
+            <div class="preview-dogs-grid">
+                @foreach ($dogs as $dog)
+                    <article class="preview-dog-card">
+                        <div class="preview-dog-image">
+                            @if ($dog->photo)
+                                <img src="{{ asset('storage/' . $dog->photo) }}" alt="{{ $dog->name }}">
+                            @else
+                                <div class="dog-placeholder">
+                                    🐶
+                                </div>
+                            @endif
+
+                            <span class="dog-status">
+                                {{ $dog->status }}
+                            </span>
+                        </div>
+
+                        <div class="preview-dog-content">
+                            <div class="dog-title-row">
+                                <h3>{{ $dog->name }}</h3>
+
+                                <span>
+                                    {{ $dog->sex }}
+                                </span>
+                            </div>
+
+                            <div class="dog-meta">
+                                <span>📅 {{ $dog->age }}</span>
+                                <span>🐾 {{ $dog->breed }}</span>
+                            </div>
+
+                            @if ($dog->description)
+                                <p>
+                                    {{ Str::limit($dog->description, 90) }}
+                                </p>
+                            @endif
+
+                            <div class="dog-actions">
+                                <a href="{{ route('dogs.show', $dog) }}" class="btn btn-outline">
+                                    Ver perfil
+                                </a>
+
+                                <a href="{{ route('dogs.show', $dog) }}" class="btn btn-primary">
+                                    Adoptar
+                                </a>
+                            </div>
+                        </div>
+                    </article>
+                @endforeach
+            </div>
+        @endif
+    </section>
+    <x-footer />
 
 </body>
 

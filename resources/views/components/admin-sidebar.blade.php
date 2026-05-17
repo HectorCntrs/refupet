@@ -42,9 +42,12 @@
             Breeds
         </a>
 
-        <a href="#"
-            class="flex items-center gap-4 rounded-2xl px-5 py-4 text-base font-bold text-[#4d342f] transition hover:bg-[#fff1ee]">
-            <span class="text-2xl">▣</span>
+        <a href="{{ route('admin.adoption-requests.index') }}" @class([
+            'flex items-center gap-4 rounded-2xl px-5 py-4 text-base font-bold transition',
+            'bg-[#e76f5a] text-[#4d1f18] shadow-sm' => request()->routeIs('admin.adoption-requests.*'),
+            'text-[#4d342f] hover:bg-[#fff1ee]' => !request()->routeIs('admin.adoption-requests.*'),
+        ])>
+    <span class="text-2xl">▣</span>
             Adoption Requests
         </a>
 
@@ -55,11 +58,21 @@
         </a>
     </nav>
 
-    <div class="mt-auto">
-        <a href="#"
+    <div class="mt-auto space-y-3 border-t border-[#efe2df] pt-5">
+        <a href="{{ route('admin.dogs.create') }}"
             class="flex w-full items-center justify-center gap-3 rounded-2xl bg-[#aa3a2a] px-5 py-4 text-base font-extrabold text-white shadow-lg shadow-red-900/20 transition hover:bg-[#922f22]">
             <span class="text-2xl">＋</span>
             Add New Dog
         </a>
+
+        <form method="POST" action="{{ route('logout') }}">
+            @csrf
+
+            <button type="submit"
+                class="flex w-full items-center justify-center gap-3 rounded-2xl border border-[#deb9b1] bg-white px-5 py-4 text-base font-extrabold text-[#a93424] transition hover:bg-[#fff1ee]">
+                <span class="text-xl">↩</span>
+                Cerrar sesión
+            </button>
+        </form>
     </div>
 </aside>
